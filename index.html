@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Fantoche Taboi Games Ultra PRO</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(#111,#000);
+color:white;
+text-align:center;
+}
+
+h1{
+margin-top:20px;
+font-size:38px;
+}
+
+.stage{
+margin-top:20px;
+position:relative;
+}
+
+#fantoche{
+width:420px;
+border-radius:20px;
+animation:float 3s infinite ease-in-out;
+}
+
+.speech{
+background:white;
+color:black;
+padding:15px;
+border-radius:20px;
+display:inline-block;
+margin-top:15px;
+font-weight:bold;
+max-width:350px;
+}
+
+.controls{
+margin-top:25px;
+}
+
+input{
+padding:12px;
+width:300px;
+border-radius:10px;
+border:none;
+font-size:16px;
+}
+
+button{
+padding:12px 16px;
+margin:5px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+background:#00ff9d;
+}
+
+button:hover{
+background:#00d084;
+}
+
+.talk{
+animation:talk 0.15s infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-15px)}
+100%{transform:translateY(0)}
+}
+
+@keyframes talk{
+0%{transform:scaleY(1)}
+50%{transform:scaleY(1.07)}
+100%{transform:scaleY(1)}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🎭 Fantoche Taboi Games Ultra PRO</h1>
+
+<div class="stage">
+
+<img id="fantoche" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...(imagem codificada)...">
+
+<div id="speech" class="speech">
+Olá pessoal do YouTube!
+</div>
+
+</div>
+
+<div class="controls">
+
+<input id="text" placeholder="Digite algo para o fantoche falar">
+
+<br>
+
+<button onclick="speak()">🎤 Falar</button>
+<button onclick="random()">😂 Piada</button>
+<button onclick="mic()">🎙️ Microfone</button>
+
+</div>
+
+<script>
+
+function speak(){
+
+let text=document.getElementById("text").value
+let speechBox=document.getElementById("speech")
+let puppet=document.getElementById("fantoche")
+
+if(text==="") return
+
+speechBox.innerText=text
+
+let msg=new SpeechSynthesisUtterance(text)
+
+msg.lang="pt-BR"
+
+puppet.classList.add("talk")
+
+msg.onend=()=>{
+puppet.classList.remove("talk")
+}
+
+speechSynthesis.speak(msg)
+
+}
+
+function random(){
+
+let frases=[
+"Não esquece do like!",
+"Se inscreve no canal!",
+"Fantoche gamer ativado!",
+"Hoje tem vídeo novo!",
+"Taboi Games é o melhor!"
+]
+
+let frase=frases[Math.floor(Math.random()*frases.length)]
+
+document.getElementById("text").value=frase
+
+speak()
+
+}
+
+function mic(){
+
+let rec=new webkitSpeechRecognition()
+
+rec.lang="pt-BR"
+
+rec.onresult=function(e){
+
+let texto=e.results[0][0].transcript
+
+document.getElementById("text").value=texto
+
+speak()
+
+}
+
+rec.start()
+
+}
+
+</script>
+
+</body>
+</html>
